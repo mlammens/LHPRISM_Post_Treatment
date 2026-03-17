@@ -93,7 +93,6 @@ Let's make a table that goes along with this.
 
 ```{r}
 #| label: tbl-native-vs-nonnative-coverage-table
-#| fig-cap: "Counts of native vs non-native coverage categories. Note that rows are native classificaitons and columns are non-native classifications."
 
 native_vs_nonnative_cover <-
   lhprism_data %>% 
@@ -102,7 +101,8 @@ native_vs_nonnative_cover <-
   filter(!is.na(native)) %>%
   pivot_wider(names_from = non_nat, values_from = n, values_fill = 0)
 
-knitr::kable(native_vs_nonnative_cover)
+knitr::kable(native_vs_nonnative_cover,
+             caption = "Counts of native vs non-native coverage categories. Note that rows are native classificaitons and columns are non-native classifications.")
 
 ## Perform a chi-squared analysis
 native_vs_nonnative_cover_chisq <-
