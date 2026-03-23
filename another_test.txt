@@ -1,3 +1,3 @@
 Here's another new text file.
 
-I've added another line to my text test file.
+I've added another line to my text test file. Here's a line where I'm setting up a merge failure.
