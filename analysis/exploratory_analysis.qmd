@@ -297,9 +297,7 @@ lhprism_data %>%
   arrange(desc(total_visits))
 ```
 
-
 ## Practice ANOVA
-
 
 ```{r}
 focal_spec <- c("CYSC4", "AREL8", "PUMO", "SAGL12", "HEMA17")
@@ -325,7 +323,6 @@ anova(focal_spec_lm)
 
 **Critical thinking question:** Considering the assumptions of ANOVA (normality, homogeneity of variance, independence), do you think this is an appropriate test to use for this data set? Why or why not? If not, what other test(s) might be more appropriate?
 
-
 ## Practice linear regression
 
 ```{r}
@@ -341,11 +338,9 @@ lm_model <- lm( log10(gross_treat_sqft + 0.1) ~ log10(gross_sqft +0.1), data = l
 summary(lm_model)
 ```
 
-
 ```{r}
 # example of a situation where regression *could* be used, but quantile regression might be more appropriate
 ggplot(data = lhprism_data, aes(x = gross_sqft, y = log_pu_count)) +
   geom_point() +
   scale_x_log10()
 ```
-

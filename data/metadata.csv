@@ -1,0 +1,43 @@
+﻿Variable_name,Description,Units
+PLANT,The code for the plant based on scientific name in the USDA PLANTS Database; matches to Populations$SPECIES_CODE,NA
+Site,Four letter code for location; matches to Populations$PROPERTY_CODE,NA
+Site Code,Location followed by plant followed by sequence #; matches to Populations$SITECODE,NA
+VISIT_DATE,Date visited,mm-dd-yyyy
+OBSERVER,Team memeber who conducted survey,NA
+ORGANIZATION,Which organization the member is employed by,NA
+VISIT_STATUS,Level of treatment at site 1-5,NA
+SEARCH_SQFT,How large the site search plot is,SQFT
+GROSS_SQFT,sqft where the plant was actually present,SQFT
+PLANT_COUNT,Number of plants of type at site,Count
+PERCENT_COVER,Percent area of plant coverage,Percentage
+AGE_SIZE,Identifies the age range of the plant,NA
+DISTRIBUTION,How densely populated the plant is in given area,NA
+PHENOLOGY,"Phenological status; e.g., reproductive status",NA
+NATIVE,"Presence of native species in site measured as low, med, high",NA
+NON_NAT,"Presence of non native species in area measured as low, med, high",NA
+iMap Searched Record,ID code for iMap entry,NA
+iMap Pres/Not Det,ID code for iMap entry,NA
+iMap Treat,ID code for iMap entry,NA
+WIND_SPEED,Wind speed,mph
+WIND_DIR,"Direction of wind (East, West, etc)",Cardinal Direction
+TEMP,Temperature at site during time of visit,Fahrenheit
+PERCENT_TREATED,Percentage of plot treated with herbicide,Percentage
+GROSS_TREAT_SQFT,Total area treated,SQFT
+ACTUAL_HERBICIDE_SQFT,Area where herbicide was directly applied,SQFT
+PU_COUNT,Hand pull method on plant,Count
+PU_PERCENT,Hand pull method on plant,Percentage
+FO_COUNT,Foliar spray treatment on plant,Count
+FO_PERCENT,Foliar spray treatment on plant,Percentage
+CO_COUNT,Cut only method on plant,Count
+CO_PERCENT,Cut only method on plant,Percentage
+CS_COUNT,Cut stump treatment on a plant,Count
+BB_COUNT,Basil bark treatment on a plant,Count
+HS_COUNT,Hack and squirt method on a plant,Count
+HERBICIDE_NAME,Name of herbicides used,NA 
+AI_CONCENTRATION,Herbicide concentration (units in following columns),Percentage
+AMT_OF_MIX,Amount of herbicides in dilute,Fluid ounce
+MIX_UNITS,"Fluid ounce, mL, Gallon",NA 
+AMT_OF_PRODUCT,Quantity of herbicide mixture (units in following columns),Count
+PRODUCT_UNITS,"Fluid ounce, mL, Gallon",NA
+PHOTO_NAMES,Names of the photos,NA
+Notes,,
