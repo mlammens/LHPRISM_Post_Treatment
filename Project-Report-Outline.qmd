@@ -12,7 +12,7 @@ Project overview. Written by all participants.
 ```{r package_setup}
 ## Get packages
 library(pacman)
-pacman::p_load(here, tidyverse, janitor, lubridate, leaflet, readxl)
+pacman::p_load(here, tidyverse, janitor, lubridate, leaflet, readxl, knitr)
 
 ## Get the project level directory path
 proj_path <- here()
@@ -154,21 +154,15 @@ USDA Natural Resources Conservation Service. (2024). *PLANTS database*. <https:/
 
 ## Overview of the LHPRISM data set
 
-
-```{r setup, message=FALSE, warning=FALSE}
-library(tidyverse)
-library(janitor)
-library(knitr)
-library(stringr)
-library(readr)
-```
-
 ## Dataset overview
 
 The dataset is an environmental monitoring record compiled by the Lower Hudson Partnership for Regional Invasive Species Management (LHPRISM). This organization operates within the broader NY-NJ region. Records span from 1992 to 2022, meaning we do not have a static snapshot of the region, but instead an archive of ongoing invasive management. This dataset is concerned with invasive plant species and the coordinated effort to control and eliminate such species from targeted sites across the northeast. Both the collection period and geographical range are broad, with records drawn from over a dozen counties. Sites range from parks, wildlife sanctuaries, golf courses, and nature preserves. Such a swath reflects the extent of ecological damage caused by invasive species.
 
 The dataset comprises just under 1,050 distinct sites that are each assigned a unique code and linked to contact information. The ecological content is split into populations and visits. The Populations tab documents 2,127 individual invasive species infestations that are assigned a specific property code and plant species code, georeferenced with latitude and longitude coordinates, and assigned a current treatment status. These statuses range from "Untreated" to "Eradicated", with intermediate stages including "Partially Treated," "Completely Treated," "No Plants 1 Year," and "No Plants 2 Years." This graduated classification system is central to the dataset's design, as it is precisely this progression, or lack of progression, that the dataset was built to track.
-```{r}
+
+```{r metadata_tbl}
+## TO-DO - figure out formatting of description so it's not wonky.
+
 #----------------------------------------------------------
 # METADATA TABLE
 #----------------------------------------------------------
@@ -188,13 +182,13 @@ metadata$percent_missing <- round(
 
 metadata_display <- metadata %>%
   select(
-    variable_name,
+    variable_name_clean,
     description,
     units,
     percent_missing
   ) %>%
   rename(
-    "Variable Name" = variable_name,
+    "Variable Name" = variable_name_clean,
     "Description" = description,
     "Units" = units,
     "Percent Missing Data" = percent_missing
