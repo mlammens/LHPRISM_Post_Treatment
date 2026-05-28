@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 PLANT,Site,Site Code,VISIT_DATE,OBSERVER,ORGANIZATION,VISIT_STATUS_NUM,VISIT_STATUS_CHAR,SEARCH_SQFT,GROSS_SQFT,PLANT_COUNT,PERCENT_COVER,AGE_SIZE,DISTRIBUTION,PHENOLOGY,NATIVE,NON_NAT,iMap Searched Record,iMap Pres/Not Det,iMap Treat,WIND_SPEED,WIND_DIR,TEMP,PERCENT_TREATED,GROSS_TREAT_SQFT,ACTUAL_HERBICIDE_SQFT,PU_COUNT,PU_PERCENT,FO_COUNT,FO_PERCENT,CO_COUNT,CO_PERCENT,CS_COUNT,BB_COUNT,HS_COUNT,HERBICIDE_NAME,AI_CONCENTRATION,AMT_OF_MIX,MIX_UNITS,AMT_OF_PRODUCT,PRODUCT_UNITS,PHOTO_NAMES,Notes
 ,,ARNI_SPJA_001,2022-06-24T04:00:00Z,Ryan McClean,New York - New Jersey Trail Conference,1,partially treated,191957,,1850,,mature,dense plants/clumps,vegetative,medium,high,,,,3,E,82,,,,1850,,,,,,,,,,,,,,,,
 ,,ARNI_SPJA_001,2022-07-03T04:00:00Z,Ryan McClean,New York - New Jersey Trail Conference,1,partially treated,249535,167862,3399,76-100,mature,monoculture,flower,low,high,,,,,,,10-25,157622,,1549,,861,100,,,,,,,,,,,,,no herbicide was used here. plant count and pu count inconsistent with trip report
@@ -3303,7 +3302,6 @@ _SYPA12_,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-=======
 ﻿PLANT,Site,Site Code,VISIT_DATE,OBSERVER,ORGANIZATION,VISIT_STATUS_NUM,VISIT_STATUS_CHAR,SEARCH_SQFT,GROSS_SQFT,PLANT_COUNT,PERCENT_COVER,AGE_SIZE,DISTRIBUTION,PHENOLOGY,NATIVE,NON_NAT,iMap Searched Record,iMap Pres/Not Det,iMap Treat,WIND_SPEED,WIND_DIR,TEMP,PERCENT_TREATED,GROSS_TREAT_SQFT,ACTUAL_HERBICIDE_SQFT,PU_COUNT,PU_PERCENT,FO_COUNT,FO_PERCENT,CO_COUNT,CO_PERCENT,CS_COUNT,BB_COUNT,HS_COUNT,HERBICIDE_NAME,AI_CONCENTRATION,AMT_OF_MIX,MIX_UNITS,AMT_OF_PRODUCT,PRODUCT_UNITS,PHOTO_NAMES,Notes
 ,,ARNI_SPJA_001,2022-06-24T04:00:00Z,Ryan McClean,New York - New Jersey Trail Conference,1,partially treated,191957,,1850,,mature,dense plants/clumps,vegetative,medium,high,,,,3,E,82,,,,1850,,,,,,,,,,,,,,,,
 ,,ARNI_SPJA_001,2022-07-03T04:00:00Z,Ryan McClean,New York - New Jersey Trail Conference,1,partially treated,249535,167862,3399,76-100,mature,monoculture,flower,low,high,,,,,,,25-Oct,157622,,1549,,861,100,,,,,,,,,,,,,no herbicide was used here. plant count and pu count inconsistent with trip report
@@ -6608,4 +6606,3 @@ _SYPA12_,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
 ,-,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
->>>>>>> c5f66b1287f030e9fc8567472abea8493791f43d
