@@ -736,6 +736,9 @@ Visit_num_vs_site_code <-
   pivot_wider(names_from = site_code, values_from = n)
 lhprism_treated
 ```
+-  The three species found to have been fully eradicated at certain sites are Scotch Broom (CYSC4), Giant Hogweed (HEMA17), and Kudzu (PUMO). Linear regression graphs were calculated for each.
+
+-   visit_status_num \* visit_date, examining how long it takes to progress to the next status for 4 target species
 
 - visit_status_num \* visit_date, examining how long it takes to progress to the next status for 4 target species
 
@@ -759,6 +762,26 @@ scale_y_reverse()
 
 ##plant_count at each status level?
 ##days/visits until new status, also days until relapse?
+
+
+hogweed_status_vs_visit <-
+hogweed_treated %>%
+group_by(`Site Code`) %>%
+summarise(total_visits = n(), 
+          max_invasion = max(GROSS_SQFT, na.rm = TRUE),
+          final_status = max(VISIT_STATUS_NUM))
+
+hogweed_status_vs_visit$max_invasion[which(hogweed_status_vs_visit$final_status == 0)] <- NA 
+
+  ggplot(data = hogweed_status_vs_visit, aes(y=final_status, x = total_visits, color= `Site Code`)) + 
+  geom_point() + 
+  ylim(c(0,5)) +
+  xlim(c(0,10))
+
+  ggplot(data = hogweed_status_vs_visit, aes(y=final_status, x = max_invasion)) + 
+  geom_point() +
+  geom_smooth(method = "lm")
+```
 ```
 
 - PUMO
@@ -778,6 +801,25 @@ facet_wrap(~site) +
 theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 5)) +
 theme(axis.text.y = element_text(size = 5)) +
 scale_y_reverse()
+
+jknotweed_status_vs_visit <-
+jknotweed_treated %>%
+group_by(`Site Code`) %>%
+summarise(total_visits = n(), 
+          max_invasion = max(GROSS_SQFT, na.rm = TRUE),
+          final_status = max(VISIT_STATUS_NUM)) 
+
+jknotweed_status_vs_visit$max_invasion[which(jknotweed_status_vs_visit$final_status == 0)] <- NA 
+
+  ggplot(data = jknotweed_status_vs_visit, aes(y=final_status, x = total_visits, color= `Site Code`)) + 
+  geom_point() + 
+  ylim(c(0,5)) +
+  xlim(c(0,15))
+
+ggplot(data = jknotweed_status_vs_visit, aes(y=final_status, x = max_invasion)) + 
+  geom_point() +
+  geom_smooth(method = "lm")
+
 ```
 
 - CYSC4
@@ -799,7 +841,29 @@ theme(axis.text.y = element_text(size = 5)) +
 scale_y_reverse()
 ```
 
-- SAGL12
+The only scotch broom site that was fully eradicated was HARR_CYSC4_040 with 4 total visits
+```{r}
+scotchbroom_status_vs_visit <-
+scotchbroom_treated %>%
+group_by(`Site Code`) %>% 
+          summarise(total_visits = n(), 
+          max_invasion = max(GROSS_SQFT, na.rm = TRUE),
+          final_status = max(VISIT_STATUS_NUM))
+
+scotchbroom_status_vs_visit$max_invasion[which(scotchbroom_status_vs_visit$final_status == 0)] <- NA 
+
+
+ggplot(data = scotchbroom_status_vs_visit, aes(y = final_status, x = total_visits, color= `Site Code`)) + 
+  geom_point() + 
+  xlim(c(0,25))
+
+ggplot(data = scotchbroom_status_vs_visit, aes(y=final_status, x = max_invasion)) + 
+  geom_point() +
+  geom_smooth(method = "lm")
+
+
+```
+-   SAGL12
 
 ```{r}
 ##SAGL12 population by site and visit_status_num
