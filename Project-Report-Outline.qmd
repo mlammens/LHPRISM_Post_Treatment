@@ -160,8 +160,9 @@ The dataset is an environmental monitoring record compiled by the Lower Hudson P
 
 The dataset comprises just under 1,050 distinct sites that are each assigned a unique code and linked to contact information. The ecological content is split into populations and visits. The Populations tab documents 2,127 individual invasive species infestations that are assigned a specific property code and plant species code, georeferenced with latitude and longitude coordinates, and assigned a current treatment status. These statuses range from "Untreated" to "Eradicated", with intermediate stages including "Partially Treated," "Completely Treated," "No Plants 1 Year," and "No Plants 2 Years." This graduated classification system is central to the dataset's design, as it is precisely this progression, or lack of progression, that the dataset was built to track.
 
-```{r metadata_tbl}
-## TO-DO - figure out formatting of description so it's not wonky.
+```{r}
+#| label: tbl-metadata
+#| tbl-cap: "LHPRISM Invasive Strikeforce Repeat Visits Metadata"
 
 #----------------------------------------------------------
 # METADATA TABLE
@@ -194,10 +195,18 @@ metadata_display <- metadata %>%
     "Percent Missing Data" = percent_missing
   )
 
-kable(metadata_display, caption = "LHPRISM Metadata Table")
+kable(metadata_display, escape = TRUE, format = "simple")
 ```
 
-The species catalog is incredibly diverse, containing over 1,000 unique species across the region. Some of the more predominant invasives include multiflora rose, Japanese knotweed, and mile-a-minute vine. The Visit sheets contain nearly 3,830 records representing the field backbone of the dataset. Each visit log captures the site surveyed, the date of the survey, the person performing the survey, and the conditions of the site. Variables record plant count, percent cover, phenological stage, the size of the area treated, and herbicide application specifics such as product name, concentration, and method used. This operational data is where the utility for evaluation arises, since it also tracks each site over time. This dataset is a collaboration between at least 18 distinct organizations. That collaboration is a key feature of the dataset and introduces meaningful variation in the data, as it may reflect what fields were prioritized and the consistency of terminology used. For example, the appearance of both “2-Completely Treated” and “Completely Treated 2” as distinct entries shows that standardization was not always consistent.
+The species catalog is diverse, containing `{r} length(unique(lhprism_data$species_code))` unique species across the region. 
+Some of the more predominant invasives include multiflora rose, Japanese knotweed, and mile-a-minute vine. 
+The Visit sheets contain nearly 3,830 records representing the field backbone of the dataset. 
+Each visit log captures the site surveyed, the date of the survey, the person performing the survey, and the conditions of the site. 
+Variables record plant count, percent cover, phenological stage, the size of the area treated, and herbicide application specifics such as product name, concentration, and method used. 
+This operational data is where the utility for evaluation arises, since it also tracks each site over time. 
+This dataset is a collaboration between at least 18 distinct organizations. 
+That collaboration is a key feature of the dataset and introduces meaningful variation in the data, as it may reflect what fields were prioritized and the consistency of terminology used. 
+For example, the appearance of both “2-Completely Treated” and “Completely Treated 2” as distinct entries shows that standardization was not always consistent.
 
 Prior to data analysis, our team completed a data cleaning procedure on OpenRefine to ensure consistency across entry variations. Missingness in variables pertaining to plant count and cover may carry more weight than treatment method variables, since every record likely did not undergo every possible treatment, but every record should have had a baseline count value to assess treatment efficiency. Variables with higher percentages of missing data may still be useful, but may also lead to gaps in final analysis.
 
@@ -209,10 +218,9 @@ Uncertainty caused by gaps in this dataset primarily originates from a lack of d
 
 It is unknown how sites were selected and defined. The data does not show whether sites were chosen randomly or selected because of high invasive presence. It is also possible that sites were chosen opportunistically for accessibility or to support quick evaluation of treatment efficiency. Not knowing how locations were chosen introduces probable bias. For example, a dataset selected because of denser invasive populations could skew results toward harder-to-treat sites, which would make treatment efficacy appear lower than it would across a random selection of sites. Multiple observers visited unique sites over time, which may affect consistency in visual assessments of percent_cover or similar non-standardized variables. Additionally, there is no information on whether observers were responding to the same sub-area within one site, as search_sqft and gross_sqft differ across recordings under one site code. We are unsure whether these inconsistencies reflect opportunity to visit or intentional collaboration. Variation in data entry across individual observers has the potential to affect analysis, since gaps may come from differences in technique rather than true ecological response.
 
-```{r fig-site-history, echo=TRUE}
-library(dplyr)
-library(knitr)
-library(lubridate)
+```{r}
+#| label: tbl-site-history
+#| tbl-cap: Visit history and treatment status for site ATNY_SAGL12_001
 
 # Filter for the site shown in the screenshot
 site_history <- lhprism_data %>%
@@ -220,16 +228,14 @@ site_history <- lhprism_data %>%
   select(site_code, visit_date, visit_status_char) %>%
   mutate(
     visit_date = as.Date(visit_date),
-    visit_date = format(visit_date, "%m/%d/%Y")
-  ) %>%
-  arrange(visit_date)
+    date_display = format(visit_date, "%m/%d/%Y")) %>%
+  arrange(visit_date) %>%
+  select(date_display, visit_status_char)
 
 # Display as a labeled figure/table
-kable(
-  site_history,
-  caption = "Visit history and treatment status for site ATNY_SAGL12_001"
-)
+kable(site_history)
 ```
+
 Categories in visit_status introduce a heavier uncertainty because we are unsure if observers were prompted to record the site’s current treatment condition or to only document any work they completed at the time of visit. The sequence of entries for a site on the Appalachian Trail regarding sticky sage (Fig. #) leads with a “completely treated” entry but when visited later by a different observer, is listed as “untreated”.  This pattern suggests the latter, in which observers recorded their own actions rather than combining a site’s treatment history. If true, the reversion as listed could affect analyses about the time it takes to get an invasive species to eradication: a site listed as “untreated” because no new work was performed could lengthen the timeline between treatment stages and subsequently final success. A lack of clarity from LHPRISM staff on how observers were trained to apply categories, especially in a variable that is critical in evaluating treatment outcomes, leaves us unsure whether the data represents ecological changes or inconsistencies in procedure across observers.
 
 
@@ -379,18 +385,15 @@ The second map uses a color gradient to classify points based on how far along t
 excel_file <- paste0(proj_path, "/data/Pace Data Project Invasives Strike Force Records.xlsx")
 
 # Read in sheet 2 of the Excel spreadsheet (populations)
-lhprism_pops <- read_excel(path = proj_path, sheet = 2)
+lhprism_pops <- read_excel(path = excel_file, sheet = "Populations", 
+                           col_types = c("text", "text", "text", "text", 
+                                         "text", "text", "text", "numeric", 
+                                         "text", "text", "text", "text", "text", 
+                                         "text", "text", "text", "text", "text", 
+                                         "text", "text", "text", "text"))
 
-Pace_Data_Project_Invasives_Strike_Force_Records <- read_excel("data/Pace Data Project Invasives Strike Force Records.xlsx", 
-                                                               sheet = "Populations", col_types = c("text", 
-                                                                                                    "text", "text", "text", "text", "text", 
-                                                                                                    "text", "numeric", "text", "text", 
-                                                                                                    "text", "text", "text", "text", "text", 
-                                                                                                    "text", "text", "text", "text", "text", 
-                                                                                                    "text", "text"))
-
-lhprism_pops$LAT <- as.numeric(trimws(Pace_Data_Project_Invasives_Strike_Force_Records$LAT))
-lhprism_pops$LONG <- as.numeric(trimws(Pace_Data_Project_Invasives_Strike_Force_Records$LONG))
+lhprism_pops$LAT <- as.numeric(trimws(lhprism_pops$LAT))
+lhprism_pops$LONG <- as.numeric(trimws(lhprism_pops$LONG))
 
 # Remove NA values
 lhprism_pops <- lhprism_pops %>%
@@ -424,6 +427,8 @@ m1 %>%
 Map 1: Locations of each treatment population. If viewing the interactive map, clicking on each point will bring up its associated property name (e.g. Rye Nature Center).
 
 ```{r map_2}
+## To-Do - need to think about how to display this through time.
+
 # Fix status text: ""1-Partially Treated" instead of "1- Partially Treated""
 lhprism_pops$POP_STATUS[3] <- "1- Partially Treated"
 lhprism_pops$POP_STATUS[7] <- "1- Partially Treated"
