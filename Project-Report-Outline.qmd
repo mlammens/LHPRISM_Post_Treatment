@@ -385,24 +385,28 @@ The second map uses a color gradient to classify points based on how far along t
 excel_file <- paste0(proj_path, "/data/Pace Data Project Invasives Strike Force Records.xlsx")
 
 # Read in sheet 2 of the Excel spreadsheet (populations)
-lhprism_pops <- read_excel(path = excel_file, sheet = "Populations", 
-                           col_types = c("text", "text", "text", "text", 
-                                         "text", "text", "text", "numeric", 
-                                         "text", "text", "text", "text", "text", 
-                                         "text", "text", "text", "text", "text", 
-                                         "text", "text", "text", "text"))
+lhprism_pops <- 
+  read_excel(path = excel_file, sheet = "Populations", 
+             col_types = c("text", "text", "text", "text", 
+                           "text", "text", "text", "numeric", 
+                           "text", "text", "text", "text", "text", 
+                           "text", "text", "text", "text", "text", 
+                           "text", "text", "text", "text")) %>%
+  clean_names()
 
-lhprism_pops$LAT <- as.numeric(trimws(lhprism_pops$LAT))
-lhprism_pops$LONG <- as.numeric(trimws(lhprism_pops$LONG))
+
+
+lhprism_pops$lat <- as.numeric(trimws(lhprism_pops$lat))
+lhprism_pops$long <- as.numeric(trimws(lhprism_pops$long))
 
 # Remove NA values
 lhprism_pops <- lhprism_pops %>%
-  filter(!is.na(LONG))
+  filter(!is.na(long))
 
 # Isolate Latitude, Longitude, Population status and Property name
-location_name <- lhprism_pops$PROPERTY_NAME
-location_lat <- lhprism_pops$LAT
-location_lng <- lhprism_pops$LONG
+location_name <- lhprism_pops$property_name
+location_lat <- lhprism_pops$lat
+location_lon <- lhprism_pops$long
 
 # Fixed data point that in the ocean due to incorrect data entry.
 # Latitude of 40.0975937 changed to 40.975937 (Rye Nature Center)
@@ -411,7 +415,7 @@ location_lat[234] <- 40.975937
 # Build data frame with latitude and longitude values
 df1 <- data.frame(name = location_name,
                  lat = location_lat,
-                 lng = location_lng)
+                 lon = location_lon)
 # Create leaflet map object
 m1 <- leaflet()
 
