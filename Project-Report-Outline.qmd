@@ -9,6 +9,10 @@ bibliography: references.bib
 
 Project overview. Written by all participants.
 
+```{r defaults}
+knitr::opts_chunk$set(warning = FALSE)
+```
+
 ```{r package_setup}
 ## Get packages
 library(pacman)
@@ -370,17 +374,15 @@ The overall purpose of the dataset is to evaluate the effectiveness of treatment
 
 ## Spatial distribution of the data
 
-The Leaflet JavaScript library was used to create two maps for this dataset: one depicting the exact locations of each population that was treated and another displaying their treatment statuses. Map one displays the properties at which the invasive species in this project were observed.Users can interact with it by clicking on each data point to see the name of its corresponding property. Map two describes the extent to which the populations at each location were treated using a color coordination scheme. These maps provide a tidy visual aid for users by offering a straightforward presentation with a useful interface that allows users to learn more about any data point they choose.
+The Leaflet JavaScript library (INSERT LEAFLET REFS) was used to create two maps for this dataset: one depicting the exact locations of each population that was treated and another displaying their treatment statuses. Map one displays the properties at which the invasive species in this project were observed.Users can interact with it by clicking on each data point to see the name of its corresponding property. Map two describes the extent to which the populations at each location were treated using a color coordination scheme. These maps provide a tidy visual aid for users by offering a straightforward presentation with a useful interface that allows users to learn more about any data point they choose.
 
-Leaflet relies heavily on the pipe function to allow users to add layers to maps. To create the first map, users will load four packages: leaflet, readxl, tidyverse, and here. After loading these packages and reading in the data, the pipe operator is used with the filter function to eliminate NA values from the data. Then, the "\$" extraction operator is used to comb through the data, isolating points by latitude, longitude, and property name as separated by columns in Excel.
+The second map uses a color gradient to classify points based on how far along the invasive species at these locations are in their treatment. The labels used are "Untreated," "Partially Treated," "Completely Treated," "No plants for 1 year," "No plants for 2 years," and "Eradicated." Untreated sites are grey, partially treated sites are orange-red, completely treated sites are yellow, sites with no plants for a year are yellow-green, sites with no plants for two years are green, and sites that have been eradicated of invasive plants are represented with lime green. This gradient provides a display that is easy for readers to understand and follow along with.
 
-In the LHPRISM data set, there is a point whose longitude included an errant zero, putting it well out of range of the other data points. This error was corrected, incorporating the point back into the range of the others. Once the data is formatted appropriately, it can be displayed by creating a data frame with the isolated information related to location. Once this step is complete, the leaflet function itself is used to create the map object. The final step is to one again use the pipe operator, addTiles, and addMarkers functions to place the points on the map.
 
-The second map uses a color gradient to classify points based on how far along the invasive species at these locations are in their treatment. The labels used are "Untreated," "Partially Treated," "Completely Treated," "No plants for 1 year," "No plants for 2 years," and "Eradicated." As with map one, the pipe operation is used with the addTiles and addCircleMarkers functions. These functions are used to assign different colors, along a spectrum, to pointes as determined by the status of their treatment. Untreated sites are grey, partially treated sites are orange-red, completely treated sites are yellow, sites with no plants for a year are yellow-green, sites with no plants for two years are green, and sites that have been eradicated of invasive plants are represented with lime green. This gradient provides a display that is easy for readers to understand and follow along with.
+```{r}
+#| label: fig-map-1
+#| fig-cap: "Locations of each treatment population. If viewing the interactive map, clicking on each point will bring up its associated property name (e.g. Rye Nature Center)."
 
-- Leaflet maps of populations:
-
-```{r map_1}
 # Patch to the Excel sheet
 excel_file <- paste0(proj_path, "/data/Pace Data Project Invasives Strike Force Records.xlsx")
 
@@ -428,7 +430,7 @@ m1 %>%
 
 ```
 
-Map 1: Locations of each treatment population. If viewing the interactive map, clicking on each point will bring up its associated property name (e.g. Rye Nature Center).
+
 
 ```{r map_2}
 ## To-Do - need to think about how to display this through time.
@@ -528,6 +530,7 @@ m2 %>%
 ```
 
 Map 2: Locations of each treatment population, colored by status of treatment (e.g. "Untreated", "Partially Treated"). If viewing the interactive map, clicking on each point will bring up its associated property name and visit status.
+
 
 ## Analysis of time / treatment effort required to eradication
 
