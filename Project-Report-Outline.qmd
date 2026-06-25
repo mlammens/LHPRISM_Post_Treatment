@@ -652,6 +652,8 @@ ggplot(data = hogweed_pop, aes(x = visit_date, y = visit_status_num, color = sit
   facet_wrap(~site) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 5)) +
   theme(axis.text.y = element_text(size = 5)) +
+  xlab("Visit Date") +
+  ylab("Population Status (0 = untreated, 5 = eradicated)") +
   scale_y_reverse()
 ```
 
@@ -669,6 +671,8 @@ ggplot(data = jknotweed_pop, aes(x = visit_date, y = visit_status_num, color = s
   facet_wrap(~site) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 5)) +
   theme(axis.text.y = element_text(size = 5)) +
+  xlab("Visit Date") +
+  ylab("Population Status (0 = untreated, 5 = eradicated)") +
   scale_y_reverse()
 
 ##plant_count at each status level
@@ -678,13 +682,6 @@ ggplot(data = jknotweed_pop, aes(x = visit_date, y = visit_status_num, color = s
 
 ```
 
-```{r kudo_status_time}
-##KUDO population by site and visit_status_num
-jknotweed_pop <- lhprism_data %>%
-  filter(species_code == "KUDO") %>%
-  arrange(site, desc(plant_count)) %>%
-  select(site, visit_date, visit_status_num, plant_count)
-```
 
 ```{r cycsc4_status_time}
 ##CYSC4 population by site and visit_status_num
@@ -692,6 +689,16 @@ scotchbroom_pop <- lhprism_data %>%
   filter(species_code == "CYSC4") %>%
   arrange(site, desc(plant_count)) %>%
   select(site, visit_date, visit_status_num, plant_count)
+
+ggplot(data = scotchbroom_pop, aes(x = visit_date, y = visit_status_num)) +
+  geom_line() +
+  theme_minimal() +
+  facet_wrap(~site_code) +
+  theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 5)) +
+  theme(axis.text.y = element_text(size = 5)) +
+  xlab("Visit Date") +
+  ylab("Population Status (0 = untreated, 5 = eradicated)") +
+  scale_y_reverse()
 ```
 
 ```{r sagl12_status_time}
@@ -708,6 +715,8 @@ ggplot(data = stickysage_pop, aes(x = visit_date, y = visit_status_num, color = 
   facet_wrap(~site) +
   theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 5)) +
   theme(axis.text.y = element_text(size = 5)) +
+  xlab("Visit Date") +
+  ylab("Population Status (0 = untreated, 5 = eradicated)") +
   scale_y_reverse()
 ```
 
@@ -721,6 +730,7 @@ lhprism_treated <-
   filter(grepl("5", visit_status_num)) %>%
   mutate(Eradicated = ifelse(visit_status_num == "5", 1, 0))
 
+lhprism_treated
 ```
 
 - Count of visits 0-5 status
@@ -732,8 +742,10 @@ Visit_num_vs_site_code <-
   count() %>%
   filter(!is.na(site_code)) %>%
   pivot_wider(names_from = site_code, values_from = n)
-lhprism_treated
+
+
 ```
+
 -  The three species found to have been fully eradicated at certain sites are Scotch Broom (CYSC4), Giant Hogweed (HEMA17), and Kudzu (PUMO). Linear regression graphs were calculated for each.
 
 -   visit_status_num \* visit_date, examining how long it takes to progress to the next status for 4 target species
@@ -743,44 +755,29 @@ lhprism_treated
 - HEMA17
 
 ```{r}
-##HEMA17 population by site and visit_status_num
-hogweed_status <- lhprism_data %>%
-filter(species_code == "HEMA17") %>%
-arrange(site, desc(plant_count)) %>%
-select(site, visit_date, visit_status_num, plant_count, gross_treat_sqft)
-
-#plotting visit_status_num across time
-ggplot(data = hogweed_status, aes(x = visit_date, y = visit_status_num, color = site)) +
-geom_line() +
-theme_minimal() +
-facet_wrap(~site) +
-theme(axis.text.x = element_text(angle = 90, hjust = 1, size = 5)) +
-theme(axis.text.y = element_text(size = 5)) +
-scale_y_reverse()
 
 ##plant_count at each status level?
 ##days/visits until new status, also days until relapse?
-
-
 hogweed_status_vs_visit <-
-hogweed_treated %>%
-group_by(`Site Code`) %>%
-summarise(total_visits = n(), 
-          max_invasion = max(GROSS_SQFT, na.rm = TRUE),
-          final_status = max(VISIT_STATUS_NUM))
+  lhprism_data %>%
+  filter(species_code == "HEMA17") %>%
+  group_by(site_code) %>%
+  summarise(total_visits = n(), 
+            max_invasion = max(gross_sqft, na.rm = TRUE),
+            final_status = max(visit_status_num))
 
-hogweed_status_vs_visit$max_invasion[which(hogweed_status_vs_visit$final_status == 0)] <- NA 
-
-  ggplot(data = hogweed_status_vs_visit, aes(y=final_status, x = total_visits, color= `Site Code`)) + 
-  geom_point() + 
+ggplot(data = hogweed_status_vs_visit, 
+       aes(y=final_status, x = total_visits)) + 
+  geom_point(alpha = 0.3) + 
+  geom_smooth(method = "lm") +
   ylim(c(0,5)) +
   xlim(c(0,10))
 
-  ggplot(data = hogweed_status_vs_visit, aes(y=final_status, x = max_invasion)) + 
+ggplot(data = hogweed_status_vs_visit, aes(y=final_status, x = max_invasion)) + 
   geom_point() +
   geom_smooth(method = "lm")
 ```
-```
+
 
 - PUMO
 
@@ -882,24 +879,6 @@ scale_y_reverse()
 
 - Description of the results of this analysis
 
-- HEMA17
 
-```{r}
-```
-
-- PUMO
-
-```{r}
-```
-
-- CYSC4
-
-```{r}
-```
-
-- SAGL12
-
-```{r}
-```
 
 ## Conclusions and recommendations
