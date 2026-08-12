@@ -65,7 +65,9 @@ lhprism_data <- lhprism_data %>%
 
 ## Introduction
 
-Ecosystems around the world face many threats — things like habitat loss, climate change, and pollution [@gentili2021]. One problem that people often overlook is the spread of invasive species [@usda2024]. In New York State, this isn't just a future worry. It's something that scientists, state agencies, and local communities deal with every day [@nysdec2024].
+Ecosystems around the world face many threats — things like habitat loss, climate change, and pollution [@gentili2021]. Non-native invasive species are a major threat to native ecosystems [@usda2024]. 
+They can disrupt ecosystem processes [], displace and cause the declines of native species [], and overall threating the natural heritage of a region [].
+In New York State, this isn't just a future worry. It's something that scientists, state agencies, and local communities deal with every day [@nysdec2024].
 
 This report uses field data from the Lower Hudson Partnership for Regional Invasive Species Management (LHPRISM) to look at where invasive species are found in the Lower Hudson Valley and how they are being managed [@nysdec2024]. To understand why this data matters, it helps to know the bigger picture: what invasive species are, how New York State organizes its response, and what official plans guide decisions about which species to focus on.
 
